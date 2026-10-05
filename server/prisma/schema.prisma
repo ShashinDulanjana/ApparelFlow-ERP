@@ -4,7 +4,8 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 enum Role {
@@ -27,14 +28,14 @@ enum ComponentStatus {
 }
 
 model User {
-  id            String            @id @default(uuid())
-  email         String            @unique
-  passwordHash  String
-  role          Role
-  fullName      String
-  createdAt     DateTime          @default(now())
+  id           String            @id @default(uuid())
+  email        String            @unique
+  passwordHash String
+  role         Role
+  fullName     String
+  createdAt    DateTime          @default(now())
   
-  orders        CuttingOrder[]    @relation("CreatedOrders")
+  orders       CuttingOrder[]    @relation("CreatedOrders")
   verifications VerificationLog[]
 }
 
@@ -62,19 +63,19 @@ model RecipeComponent {
 }
 
 model CuttingOrder {
-  id             String             @id @default(uuid())
-  orderNo        String             @unique
-  recipeId       String
-  targetQty      Int
-  fabricRollId   String
-  actualFabricYds Float
-  status         OrderStatus        @default(CUTTING_IN_PROGRESS)
-  createdBy      String
-  createdAt      DateTime           @default(now())
-  updatedAt      DateTime           @updatedAt
+  id               String             @id @default(uuid())
+  orderNo          String             @unique
+  recipeId         String
+  targetQty        Int
+  fabricRollId     String
+  actualFabricYds  Float
+  status           OrderStatus        @default(CUTTING_IN_PROGRESS)
+  createdBy        String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 
-  recipe         Recipe             @relation(fields: [recipeId], references: [id])
-  creator        User               @relation("CreatedOrders", fields: [createdBy], references: [id])
+  recipe           Recipe             @relation(fields: [recipeId], references: [id])
+  creator          User               @relation("CreatedOrders", fields: [createdBy], references: [id])
   verificationItems VerificationItem[]
   verificationLogs  VerificationLog[]
 }
