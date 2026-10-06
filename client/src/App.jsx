@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const rawBase = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
-const API_BASE = rawBase.endsWith('/api') ? rawBase : `${rawBase}/api`;
+const rawBase = 'https://apparel-flow-erp-backend.vercel.app';
+const API_BASE = `${rawBase}/api`;
 
 export default function App() {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
